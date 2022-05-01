@@ -7,6 +7,6 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./app:/app
+      - .:.
     command: >
       sh -c "django r 0.0.0.0:5000"
