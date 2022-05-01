@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.utils import timezone
 from rest_framework import generics, permissions, response, status
@@ -77,6 +77,7 @@ class LoginView(generics.GenericAPIView):
                     token = Token.objects.get(user=user)
                 except:
                     token = Token.objects.create(user=user)
+                login(request, user=user)
                 return response.Response({'message': 'Login Successful', 'token': str(token)}, status=status.HTTP_202_ACCEPTED)
             return response.Response({'message': 'Invalid Authentication'}, status=status.HTTP_403_FORBIDDEN)
         return response.Response({'message': 'An Error Occurred', 'errors': serializer.errors}, status=status.HTTP_401_UNAUTHORIZED)
