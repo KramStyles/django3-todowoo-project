@@ -2,6 +2,7 @@ from urllib import response
 from django.contrib.auth.models import User
 from django.utils import timezone
 from rest_framework import generics, permissions, response, status
+from rest_framework.authtoken.models import Token
 
 from . import serializers
 from todo.models import Todo
@@ -58,5 +59,8 @@ class RegisterView(generics.CreateAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return response.Response({'message': 'User Created', 'token': '1234'}, status=status.HTTP_201_CREATED)
+            user = User.objects.get(username = serializer.data['username'])
+            token = Token.objects.create(user=user)
+            print(token)
+            return response.Response({'message': 'User Created', 'token': 'token'}, status=status.HTTP_201_CREATED)
         return response.Response({'message': 'An Error Occurred', 'errors': serializer.errors}, status=status.HTTP_201_CREATED)
