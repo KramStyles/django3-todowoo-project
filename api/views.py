@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.utils import timezone
 from rest_framework import generics, permissions
 
@@ -46,3 +47,9 @@ class TodoOk(generics.UpdateAPIView):
     def perform_update(self, serializer):
         serializer.instance.datecompleted = timezone.now()
         serializer.save()
+
+
+class RegisterView(generics.ListCreateAPIView):
+    serializer_class = serializers.RegisterSerializer
+    queryset = User.objects.all()
+
