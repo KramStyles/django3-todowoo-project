@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 
 from todo.models import Todo
 
@@ -32,3 +32,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         new_user.set_password(validated_data['password'])
         new_user.save()
         return new_user
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=100)
+    password = serializers.CharField(max_length=100)
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
