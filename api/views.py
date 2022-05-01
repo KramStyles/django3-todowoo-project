@@ -1,5 +1,5 @@
 from django.utils import timezone
-from rest_framework import generics, permissions, response
+from rest_framework import generics, permissions
 
 from . import serializers
 from todo.models import Todo
@@ -23,9 +23,10 @@ class TodoCreate(generics.ListCreateAPIView):
         user = self.request.user
         todos = Todo.objects.filter(user=user, datecompleted__isnull=True)
         return todos
-    
-    def perform_create(self, serializer): 
+
+    def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
 
 class TodoUpdate(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.TodoSerializer
@@ -33,7 +34,7 @@ class TodoUpdate(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Todo.objects.filter(user=self.request.user)
-    
+
 
 class TodoOk(generics.UpdateAPIView):
     serializer_class = serializers.TodoCompleteSerializer
@@ -45,5 +46,3 @@ class TodoOk(generics.UpdateAPIView):
     def perform_update(self, serializer):
         serializer.instance.datecompleted = timezone.now()
         serializer.save()
-        
-    
