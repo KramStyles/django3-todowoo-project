@@ -25,6 +25,10 @@ urlpatterns = [
     path('todos/<int:pk>/ok', views.TodoOk.as_view(), name='todo-ok'),
     path('completed/', views.TodoCompletedList.as_view(), name='todo-completed'),
 
+    # AUTH
+    path('register/', views.RegisterView.as_view(), name='api-register'),
+    path('login/', views.LoginView.as_view(), name='api-login'),
+
     # API DOCUMENTATION
     path('json/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

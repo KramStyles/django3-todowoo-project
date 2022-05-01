@@ -25,7 +25,7 @@ SECRET_KEY = '_jjhm#&qjqbm_qula%xs2(0&^qwai@2c%au&4z57%g+=-lsbno'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # PIP INSTALLS
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_yasg',
 ]
 
@@ -129,3 +130,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/login'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication'],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.SessionAuthentication'],
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
